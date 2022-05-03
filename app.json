@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "wk11_coin",
-    "slug": "wk11_coin",
+    "name": "wk1proj",
+    "slug": "wk1proj",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#29303A"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
