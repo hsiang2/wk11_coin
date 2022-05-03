@@ -4,8 +4,8 @@ import { persistStore, persistReducer } from "redux-persist";
 import { configureStore } from "@reduxjs/toolkit";
 import contentReducer from './contentSlice';
 import selectedRangeReducer from './selectedRangeSlice';
-import loadingReducer, { selectLoading } from './loadingSlice';
-import { exp } from "react-native-reanimated";
+import loadingReducer from './loadingSlice';
+import chartReducer from './chartSlice'
 
 const persistConfig = {
     key: 'root',
@@ -16,7 +16,8 @@ export const store = configureStore({
     reducer: {
         content: persistReducer(persistConfig, contentReducer),
         selectedRange: selectedRangeReducer,
-        loading: loadingReducer
+        loading: loadingReducer,
+        chart: chartReducer
     },
     devTools: process.env.NODE_ENV !== 'production',
     middleware: [thunk]

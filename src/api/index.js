@@ -1,6 +1,4 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
-// import { selectSelectedRange } from "../redux/selectedRangeSlice";
 
 export const getMarketData = async (pageNumber = 1) => {
   return await axios.get(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&page=${pageNumber}&sparkline=false&price_change_percentage=24h`)
@@ -23,7 +21,6 @@ export const getDetailedCoinData = async (coinId) => {
 }
 
 export const getCoinMarketChart = async (coinId, selectedRange) => {
-  //const selectedRange = useSelector(selectSelectedRange);
   return await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${selectedRange}&interval=hourly`)
   // try {
   //   const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${selectedRange}&interval=hourly`)
@@ -34,7 +31,6 @@ export const getCoinMarketChart = async (coinId, selectedRange) => {
 }
 
 export const getCandleChartData = async (coinId, days = 1) => {
-  //const selectedRange = useSelector(selectSelectedRange);
   return await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}/ohlc?vs_currency=usd&days=${days}`);
   // try {
   //   const response = await axios.get(`https://api.coingecko.com/api/v3/coins/${coinId}/ohlc?vs_currency=usd&days=${days}`)

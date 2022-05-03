@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { FlatList, HStack, VStack, Text } from "native-base";
 import CoinItem from "../components/CoinItem";
-//import { getMarketData } from "../api";
 import { getMarketAsync } from "../redux/contentSlice";
 import { selectMarketData } from "../redux/contentSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,17 +12,6 @@ const HomeScreen = () => {
   useEffect(() => {
     dispatch(getMarketAsync());
   }, [])
-  //
-  // const [coins, setCoins] = useState([]);
-
-  // const fetchCoins = async (pageNumber) => {
-  //   const coinsData = await getMarketData(pageNumber);
-  //   setCoins(coinsData);
-  // };
-
-  // useEffect(() => {
-  //   fetchCoins(1);
-  // }, []);
 
   return (
     <VStack flex={1} mx={2}>

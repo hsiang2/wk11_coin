@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Text, HStack, Switch, VStack, ScrollView, useColorMode } from "native-base"
 import { ActivityIndicator, Dimensions } from "react-native"
 import { LineChart, CandlestickChart } from "react-native-wagmi-charts";
@@ -6,26 +6,24 @@ import { useSelector, useDispatch } from "react-redux";
 
 import CoinDetailedHeader from "../components/CoinDetailedHeader";
 import FilterComponent from "../components/FilterComponent"
-// import {
-//   //getDetailedCoinData,
-//   getCoinMarketChart,
-//   getCandleChartData,
-// } from "../api";
 import { getDetailedCoinAsync, getCoinMarketChartAsync, getCandleChartAsync } from "../redux/contentSlice";
 import { selelectDetailedCoinData, selectCoinMarketChart, selectCandleChartData } from "../redux/contentSlice";
 import { selectSelectedRange, setSelectedRange } from '../redux/selectedRangeSlice'
 import { selectLoading, setLoading } from "../redux/loadingSlice";
+import { selectIsCandleChartVisible, setIsCandleChartVisible } from "../redux/chartSlice";
 
 const chartColor = "#16c784";
 const screenWidth = Dimensions.get("window").width * 0.8;
 
 const CoinDetailedScreen = ({ route, navigation }) => {
+  const { colorMode } = useColorMode();
   const dispatch = useDispatch();
   const selectedRange = useSelector(selectSelectedRange);
   const detailedCoinData = useSelector(selelectDetailedCoinData);
   const coinMarketChart = useSelector(selectCoinMarketChart);
   const candleChartData = useSelector(selectCandleChartData);
   const loading = useSelector(selectLoading);
+  const isCandleChartVisible = useSelector(selectIsCandleChartVisible);
   const { coinId } = route.params;
   
   useEffect(() => {
@@ -36,54 +34,11 @@ const CoinDetailedScreen = ({ route, navigation }) => {
     dispatch(setLoading(false));
   }, [])
 
-  //const [coin, setCoin] = useState(null);
-  //const [coinMarketData, setCoinMarketData] = useState([]);
-  //const [coinCandleChartData, setCoinCandleChartData] = useState([]);
-  //const [loading, setLoading] = useState(false);
-  //const [selectedRange, setSelectedRange] = useState("1");
-  const [isCandleChartVisible, setIsCandleChartVisible] = useState(false);
-  //const { coinId } = route.params;
-  const { colorMode } = useColorMode();
-
-  // const fetchCoinData = async () => {
-  //   const fetchedCoinData = await getDetailedCoinData(coinId);
-  //   setCoin(fetchedCoinData);
-  // };
-
-  // const fetchMarketCoinData = async (selectedRangeValue) => {
-  //   const fetchedCoinMarketData = await getCoinMarketChart(
-  //     coinId,
-  //     selectedRangeValue
-  //   );
-  //   setCoinMarketData(fetchedCoinMarketData);
-  // };
-
-  // const fetchCandleStickChartData = async (selectedRangeValue) => {
-  //   const fetchedSelectedCandleChartData = await getCandleChartData(
-  //     coinId,
-  //     selectedRangeValue
-  //   );
-  //   setCoinCandleChartData(fetchedSelectedCandleChartData);
-  // };
-
   const onSelectedRangeChange = (selectedRangeValue) => {
     dispatch(setSelectedRange(selectedRangeValue))
     dispatch(getCandleChartAsync({id: coinId, range: selectedRange}))
     dispatch(getCoinMarketChartAsync({id: coinId, range: selectedRange}))
-    
-    //getCoinMarketChartAsync(selectedRangeValue);
-    //getCandleChartAsync(selectedRangeValue);
-    //fetchMarketCoinData(selectedRangeValue);
-    //fetchCandleStickChartData(selectedRangeValue);
   };
-
-  // useEffect(() => {
-  //   setLoading(true);
-  //   // fetchCoinData();
-  //   // fetchMarketCoinData(1);
-  //   // fetchCandleStickChartData(1);
-  //   setLoading(false);
-  // }, []);
 
   useEffect(() => {
     if (detailedCoinData != null) {
@@ -101,7 +56,6 @@ const CoinDetailedScreen = ({ route, navigation }) => {
       });
     }
   }, [detailedCoinData])
-  //console.log(coinMarketChart);
   
   let line_data = [];
   coinMarketChart.prices?.map(([timestamp, value]) => line_data.push({ timestamp, value }));
@@ -131,7 +85,7 @@ const CoinDetailedScreen = ({ route, navigation }) => {
                 colorScheme="emerald"
                 name="line Mode"
                 isChecked={!isCandleChartVisible}
-                onToggle={() => setIsCandleChartVisible(!isCandleChartVisible)}
+                onToggle={() => dispatch(setIsCandleChartVisible())}
                 accessibilityLabel="line-mode"
                 accessibilityHint="line or candle"
               />

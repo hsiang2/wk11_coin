@@ -1,8 +1,5 @@
 import React, { memo } from "react";
 import { HStack, Text, Pressable, useColorMode } from "native-base";
-import { useSelector, useDispatch } from "react-redux";
-import { selectSelectedRange, setSelectedRange } from "../redux/selectedRangeSlice";
-import { getCoinMarketChartAsync, getCandleChartAsync} from "../redux/contentSlice";
 
 const filterDaysArray = [
   { filterDay: "1", filterText: "24h" },
@@ -13,8 +10,6 @@ const filterDaysArray = [
 ];
 
 const FilterComponent = (props) => {
-  //const dispatch = useDispatch();
-  //const selectedRange = useSelector(selectSelectedRange);
   const { selectedRange, setSelectedRange } = props;
   const { colorMode } = useColorMode();
   const isFilterSelected = (filter) => filter === selectedRange;
